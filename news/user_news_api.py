@@ -10,7 +10,7 @@ news_router = APIRouter(prefix='/user_news', tags=['Работа с новост
 
 # Запрос на публикацию новости
 @news_router.post('/public_news')
-async def public_post(data: PublicPostValidator):
+async def public_news(data: PublicPostValidator):
     result = add_news_db(**data.model_dump())
 
     if result:
