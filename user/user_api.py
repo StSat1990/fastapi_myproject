@@ -3,7 +3,7 @@ from user import LoginUserValidator, RegisterUserValidator
 
 from database.userservice import login_user_db, register_user_db, get_exact_user_db, get_all_users_db
 
-user_router = APIRouter(prefix='/user', tags=['Управления пользователями'])
+user_router = APIRouter(prefix='/user', tags=['Управление пользователями'])
 
 
 # Логин
