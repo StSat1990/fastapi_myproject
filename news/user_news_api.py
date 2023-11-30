@@ -31,8 +31,8 @@ async def change_news(data: EditNewsValidator):
 
 # Запрос на удаления новости
 @news_router.delete('/delete_news')
-async def delete_news(post_id: int):
-    result = delete_news_db(post_id)
+async def delete_news(news_id: int):
+    result = delete_news_db(news_id)
 
     if result:
         return {'message': result, 'status': 'Deleted'}
