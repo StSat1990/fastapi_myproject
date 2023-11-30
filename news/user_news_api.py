@@ -1,6 +1,6 @@
 from fastapi import APIRouter, UploadFile, Body
 
-from news import PublicPostValidator, EditPostValidator
+from news import PublicNewsValidator, EditNewsValidator
 
 from database.newsservice import add_news_db, add_news_photo_db, edit_news_db, delete_news_db, get_all_news_db, \
     get_exact_news_db
@@ -10,7 +10,7 @@ news_router = APIRouter(prefix='/user_news', tags=['Работа с новост
 
 # Запрос на публикацию новости
 @news_router.post('/public_news')
-async def public_news(data: PublicPostValidator):
+async def public_news(data: PublicNewsValidator):
     result = add_news_db(**data.model_dump())
 
     if result:
@@ -20,7 +20,7 @@ async def public_news(data: PublicPostValidator):
 
 # Запрос на изменения текста новости
 @news_router.put('/change_news')
-async def change_news(data: EditPostValidator):
+async def change_news(data: EditNewsValidator):
     result = edit_news_db(**data.model_dump())
 
     if result:
