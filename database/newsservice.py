@@ -79,7 +79,7 @@ def get_all_news_db():
 def get_exact_news_db(news_id):
     db = next(get_db())
 
-    exact_news = db.query(NewsPhoto).filter_by(id=news_id).first()
+    exact_news = db.query(UserNews).filter_by(id=news_id).first()
 
     if exact_news:
         return exact_news
