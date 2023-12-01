@@ -1,4 +1,4 @@
-from fastapi import APIRouter, UploadFile, Body
+from fastapi import APIRouter, UploadFile, File
 
 from news import PublicNewsValidator, EditNewsValidator
 
@@ -48,24 +48,23 @@ async def get_all_news():
 
 # Запрос для добавления фото к новости
 @news_router.post('/add_photo')
-async def add_photo(news_id: int = Body(),
-                    photo_file: UploadFile = None
+async def add_photo(news_id: int,
+                    photo_file: UploadFile = File(...)
                     ):
     photo_path = f'/media/{photo_file.filename}'
-    try:
-        # Сохранения фотографии в папку media
-        with open(f'media/{photo_file.filename}', 'wb') as file:
-            user_photo = await photo_file.read()
 
-            file.write(user_photo)
+    # Сохранения фотографии в папку media
+    with open(f'media/{photo_file.filename}', 'wb+') as file:
+        user_photo = await photo_file.read()
 
-        # Сохранения ссылки к фотографии в базу
-        result = add_news_photo_db(post_id=news_id, post_photo=photo_path)
+        file.write(user_photo)
 
-    except Exception as error:
-        result = error
+    # Сохранения ссылки к фотографии в базу
+    result = add_news_photo_db(news_id=news_id, news_photo=photo_path)
 
-    return {'message': result}
+    return result
+
+
 
 
 # Получить определенную новость
@@ -73,7 +72,4 @@ async def add_photo(news_id: int = Body(),
 async def get_exact_news(news_id: int):
     result = get_exact_news_db(news_id)
 
-    if result:
-        return {'message': result}
-    else:
-        return {'message': 'Post not found'}
+    return {'message': result}

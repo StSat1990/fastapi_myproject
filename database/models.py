@@ -23,16 +23,20 @@ class UserNews(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     news_text = Column(String)
+    news_photo = Column(String, ForeignKey('news_photos.id'))
     publish_date = Column(DateTime)
 
+    news_fk = relationship("NewsPhoto", lazy="subquery")
     user_fk = relationship(User, lazy="subquery")
+
 
 # Таблица фотографий
 class NewsPhoto(Base):
     __tablename__ = 'news_photos'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    news_id = Column(Integer, ForeignKey("user_news.id"))
-    news_photo = Column(String)
+    news_id = Column(Integer, ForeignKey('user_news.id'))
+    photo_path = Column(String)
 
-    post_fk = relationship(UserNews, lazy='subquery')
+    user_fks = relationship("UserNews", lazy='subquery')
+
 

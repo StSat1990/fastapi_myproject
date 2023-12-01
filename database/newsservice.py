@@ -16,16 +16,17 @@ def add_news_db(user_id, news_text):
 
     return 'Успешно добавлено'
 
+
 # Добавить фото к новости
 def add_news_photo_db(news_id, news_photo):
     db = next(get_db())
 
-    news_photo = NewsPhoto(news_id=news_id, news_photo=news_photo)
+    news_photo = NewsPhoto(news_id=news_id, photo_path=news_photo)
 
     db.add(news_photo)
     db.commit()
 
-    return 'Фотография загружена'
+    return f'Фотография загружена id - {news_photo.id}'
 
 #Получить фото новости
 def get_news_photo_db():
@@ -68,6 +69,7 @@ def delete_news_db(news_id):
     else:
         return False
 
+
 #Получить все новости
 def get_all_news_db():
     db = next(get_db())
@@ -75,11 +77,12 @@ def get_all_news_db():
     all_news = db.query(UserNews).all()
     return all_news
 
+
 #Получить определенную новость
 def get_exact_news_db(news_id):
     db = next(get_db())
 
-    exact_news = db.query(UserNews).filter_by(id=news_id).first()
+    exact_news = db.query(UserNews).filter_by(news_id=news_id).first()
 
     if exact_news:
         return exact_news
