@@ -23,7 +23,6 @@ class UserNews(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     news_text = Column(String)
-    news_photo = Column(String)
     publish_date = Column(DateTime)
 
     user_fk = relationship(User, lazy="subquery")
